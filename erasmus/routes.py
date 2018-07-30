@@ -10,13 +10,14 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
 def accueil():
-
+    """ Route permettant l'affichage de la page d'accueil
+            """
     return render_template("pages/accueil.html", nom="Erasmus")
 
 
 @app.route("/bibliotheques")
 def all_libraries():
-
+    """Route permettant l'affichage d'une liste des bibliothèques"""
     page = request.args.get("page", 1)
 
     if isinstance(page, str) and page.isdigit():
@@ -29,7 +30,7 @@ def all_libraries():
 
 @app.route("/editions")
 def all_issues():
-
+    """Route permettant l'affichage d'une liste des éditions"""
     page = request.args.get("page", 1)
 
     if isinstance(page, str) and page.isdigit():
@@ -42,6 +43,7 @@ def all_issues():
 
 @app.route("/exemplaires_par_possesseur")
 def exemplaires_par_possesseur():
+    """Route permettant l'affichage d'une liste des exemplaires par possesseur"""
     page = request.args.get("page", 1)
 
     if isinstance(page, str) and page.isdigit():
@@ -56,7 +58,9 @@ def exemplaires_par_possesseur():
 
 @app.route("/edition/<int:edition_id>")
 def issue(edition_id):
-
+    """Route permettant l'affichage d'une édition
+        :param edition_id : identifiant numérique de l'édition récupéré depuis la page notice
+        """
     unique_issue = Edition.query.get(edition_id)
     exemplaires=unique_issue.exemplaire
     citations=unique_issue.citation
@@ -68,7 +72,7 @@ def issue(edition_id):
 
 @app.route("/bibliographies")
 def all_bibliographies():
-
+    """Route permettant l'affichage d'une liste des oeuvres"""
     page = request.args.get("page", 1)
 
     if isinstance(page, str) and page.isdigit():
@@ -81,7 +85,9 @@ def all_bibliographies():
 
 @app.route("/bibliographie/<int:bibliographie_id>")
 def bibliographie(bibliographie_id):
-
+    """Route permettant l'affichage d'une bibliographie
+            :param bibliographie_id : identifiant numérique de l'oeuvre récupéré depuis la page notice
+            """
     unique_bibliographie = Bibliographie.query.get(bibliographie_id)
     references=unique_bibliographie.reference
 
@@ -89,8 +95,8 @@ def bibliographie(bibliographie_id):
 
 @app.route("/ajout_bibliographie", methods=["GET", "POST"])
 def ajout_bibliographie():
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des oeuvres
+        :return: page html d'ajout d'un oeuvre
         """
 
     if request.method == "POST":
@@ -114,7 +120,9 @@ def ajout_bibliographie():
 
 @app.route("/modif_bibliographie/<int:bibliographie_id>", methods=["GET", "POST"])
 def modif_bibliographie(bibliographie_id):
-
+    """ Route permettant de modifier un formulaire avec les données d'un oeuvre
+           :param bibliographie_id: identifiant numérique de l'oeuvre récupéré depuis la page notice
+           """
     unique_bibliographie = Bibliographie.query.get(bibliographie_id)
     if request.method == "POST":
         bibliographie = Bibliographie.query.get(bibliographie_id)
@@ -139,7 +147,7 @@ def modif_bibliographie(bibliographie_id):
 
 @app.route("/catalogues")
 def all_catalogues():
-
+    """Route permettant l'affichage d'une liste des catalogues"""
     page = request.args.get("page", 1)
 
     if isinstance(page, str) and page.isdigit():
@@ -153,7 +161,9 @@ def all_catalogues():
 
 @app.route("/catalogue/<int:catalogue_id>")
 def catalogue(catalogue_id):
-    # On a bien sûr aussi modifié le template pour refléter le changement
+    """Route permettant l'affichage d'un catalogue
+    :param catalogue_id : identifiant numérique du catalogue récupéré depuis la page notice
+    """
     unique_catalogue = Catalogue.query.get(catalogue_id)
 
 
@@ -161,8 +171,8 @@ def catalogue(catalogue_id):
 
 @app.route("/ajout_catalogue", methods=["GET", "POST"])
 def ajout_catalogue():
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des catalogues
+        :return: page html d'ajout de catalogue
         """
 
     if request.method == "POST":
@@ -182,7 +192,9 @@ def ajout_catalogue():
 
 @app.route("/modif_catalogue/<int:catalogue_id>", methods=["GET", "POST"])
 def modif_catalogue(catalogue_id):
-
+    """ Route permettant de modifier un formulaire avec les données d'un catalogue
+            :param catalogue_id: identifiant numérique du catalogue récupéré depuis la page notice
+        """
     unique_catalogue = Catalogue.query.get(catalogue_id)
     if request.method == "POST":
         catalogue = Catalogue.query.get(catalogue_id)
@@ -206,7 +218,9 @@ def modif_catalogue(catalogue_id):
 
 @app.route("/bibliotheque/<int:bibliothecae_id>")
 def library(bibliothecae_id):
-    # On a bien sûr aussi modifié le template pour refléter le changement
+    """Route permettant l'affichage d'une bibliothèque
+        :param bibliothecae_id : identifiant numérique de la bibliothèque récupéré depuis la page notice
+        """
     unique_bibliotheque = Bibliothecae.query.get(bibliothecae_id)
 
     exemplaires = unique_bibliotheque.exemplaire
@@ -217,8 +231,8 @@ def library(bibliothecae_id):
 
 @app.route("/ajout_bibliotheque", methods=["GET", "POST"])
 def ajout_bibliotheque():
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des bibliothèques
+        :return: page html d'ajout d'une bibliothèque
         """
 
     if request.method == "POST":
@@ -241,9 +255,9 @@ def ajout_bibliotheque():
 
 @app.route("/modif_bibliotheque/<int:bibliothecae_id>", methods=["GET", "POST"])
 def modif_bibliotheque(bibliothecae_id):
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
-        """
+    """ Route permettant de modifier un formulaire avec les données d'une bibliothèque
+        :param bibliothecae_id: identifiant numérique de la bibliothèque récupéré depuis la page notice
+    """
     unique_bibliotheque = Bibliothecae.query.get(bibliothecae_id)
     if request.method == "POST":
         bibliotheque=Bibliothecae.query.get(bibliothecae_id)
@@ -268,7 +282,9 @@ def modif_bibliotheque(bibliothecae_id):
 
 @app.route("/exemplaire/<int:exemplaire_id>")
 def exemplar(exemplaire_id):
-    # On a bien sûr aussi modifié le template pour refléter le changement
+    """Route permettant l'affichage d'un exemplaire
+            :param exemplaire_id : identifiant numérique de l'exemplaire récupéré depuis la page notice
+            """
     unique_exemplar = Exemplaire.query.get(exemplaire_id)
     edition_exemplaire = Edition.query.get(unique_exemplar.exemplaire_edition_id)
     provenances=unique_exemplar.provenance
@@ -278,8 +294,8 @@ def exemplar(exemplaire_id):
 
 @app.route("/creer_edition", methods=["GET", "POST"])
 def creer_edition():
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des éditions
+        :return: page html d'ajout d'une édition
         """
     dates = list(range(1450, 1605, 1))
 
@@ -347,9 +363,9 @@ def creer_edition():
 
 @app.route("/modif_edition/<int:edition_id>", methods=["GET", "POST"])
 def modif_edition(edition_id):
-    """ Route permettant modifier le commentaire
-        :param comment_id: Identifiant numérique du commentaire
-        :return: page html avec un formulaire pour modifier le commentaire"""
+    """ Route permettant de modifier un formulaire avec les données d'une édition
+            :param edition_id: identifiant numérique de l'édition récupéré depuis la page notice
+        """
     unique_edition = Edition.query.get(edition_id)
 
     if request.method=="POST":
@@ -419,8 +435,9 @@ def modif_edition(edition_id):
 
 @app.route("/ajout_exemplaire/<int:identifier>", methods=["GET", "POST"])
 def ajout_exemplaire(identifier):
-    """ Route gérant les ajouts des commentaires
-    :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des exemplaires
+    :param identifier : identifiant d'édition
+    :return: page html d'ajout d'un exemplaire
     """
 
     if request.method == "GET":
@@ -465,9 +482,9 @@ def ajout_exemplaire(identifier):
 
 @app.route("/modif_exemplaire/<int:exemplaire_id>", methods=["GET", "POST"])
 def modif_exemplaire(exemplaire_id):
-    """ Route gérant les ajouts des commentaires
-        :return: page html d'ajout de commentaire
-        """
+    """ Route permettant de modifier un exemplaire avec les données d'un catalogue
+        :param exemplaire_id: identifiant numérique de l'exemplaire récupéré depuis la page notice
+    """
     unique_exemplaire = Exemplaire.query.get(exemplaire_id)
     bibliotheques = Bibliothecae.query.order_by(Bibliothecae.bibliothecae_library).all()
     if request.method == "POST":
@@ -506,8 +523,9 @@ def modif_exemplaire(exemplaire_id):
 
 @app.route("/ajout_provenance/<int:exemplaire_id>", methods=["GET", "POST"])
 def ajout_provenance(exemplaire_id):
-    """ Route gérant les ajouts des commentaires
-    :return: page html d'ajout de commentaire
+    """ Route gérant les ajouts des provenances
+    :param exemplaire_id : identifiant d'exemplaire
+    :return: page html d'ajout d'une provenance
     """
 
     if request.method == "GET":
@@ -544,7 +562,9 @@ def ajout_provenance(exemplaire_id):
 
 @app.route("/modif_provenance/<int:provenance_id>", methods=["GET", "POST"])
 def modif_provenance(provenance_id):
-
+    """ Route permettant de modifier un formulaire avec les données d'une provenance
+                :param provenance_id: identifiant numérique de la catalogue récupéré depuis la page notice
+            """
     unique_provenance = Provenance.query.get(provenance_id)
 
     if request.method == "POST":
@@ -576,9 +596,10 @@ def modif_provenance(provenance_id):
 
 @app.route("/ajout_reference/<int:edition_id>", methods=["GET", "POST"])
 def ajout_reference(edition_id):
-    """ Route gérant les ajouts des commentaires
-    :return: page html d'ajout de commentaire
-    """
+    """ Route gérant les ajouts des référence
+        :param edition_id : identifiant d'édition
+        :return: page html d'ajout d'une référence
+        """
 
     if request.method == "GET":
         bibliographies = Bibliographie.query.all()
@@ -608,6 +629,9 @@ def ajout_reference(edition_id):
 
 @app.route("/modif_reference/<int:reference_id>", methods=["GET", "POST"])
 def modif_reference(reference_id):
+    """ Route permettant de modifier un formulaire avec les données d'une référence
+                :param reference_id: identifiant numérique de la référence récupéré depuis la page notice
+            """
     bibliographies = Bibliographie.query.all()
     unique_reference = Reference.query.get(reference_id)
 
@@ -634,9 +658,10 @@ def modif_reference(reference_id):
 
 @app.route("/ajout_citation/<int:edition_id>", methods=["GET", "POST"])
 def ajout_citation(edition_id):
-    """ Route gérant les ajouts des commentaires
-    :return: page html d'ajout de commentaire
-    """
+    """ Route gérant les ajouts des citations
+        :param edition_id : identifiant d'édition
+        :return: page html d'ajout d'une citation
+        """
 
     if request.method == "GET":
         edition = Edition.query.get(edition_id)
@@ -664,7 +689,9 @@ def ajout_citation(edition_id):
 
 @app.route("/modif_citation/<int:citation_id>", methods=["GET", "POST"])
 def modif_citation(citation_id):
-
+    """ Route permettant de modifier un formulaire avec les données d'une citation
+                :param catalogue_id: identifiant numérique de la citation récupéré depuis la page notice
+            """
     unique_citation = Citation.query.get(citation_id)
     catalogues = Catalogue.query.all()
     if request.method == "POST":
@@ -690,14 +717,9 @@ def modif_citation(citation_id):
 
 @app.route("/recherche")
 def recherche():
-    """ Route permettant la recherche plein-texte
+    """ Route permettant la recherche plein-texte par plusieurs champs
     """
-    # On préfèrera l'utilisation de .get() ici
-    #   qui nous permet d'éviter un if long (if "clef" in dictionnaire and dictonnaire["clef"])
 
-
-    # On crée une liste vide de résultat (qui restera vide par défaut
-    #   si on n'a pas de mot clé)
 
     resultats = []
 
@@ -732,8 +754,9 @@ def recherche_rapide():
     # Création d'une liste vide de résultat (par défaut, vide si pas de mot-clé)
     resultats = []
 
-    # cherche les mots-clés dans les champs : nom, prenom, surnom, nom en langue maternelle, pays nationalité, langue
-    # occupation(s) et description
+    # cherche les mots-clés dans les champs : author_first, author_second, place, short_title,
+    # languages, prefaceur, printer, nomRejete, place2, class0, class1, class2, displayDate,
+    # cleanDate, country, full_title, publisher, translator, imprint
     titre = "Recherche"
     if motcle :
         resultats = Edition.query.filter(db.or_(Edition.edition_author_first.like("%{}%".format(motcle)),
@@ -764,10 +787,9 @@ def recherche_rapide():
 
 @app.route("/suppression_edition/<int:edition_id>", methods=["GET", "POST"])
 def suppression_edition(edition_id):
-    """ Route pour supprimer le commentaire
-    :param comment_id : identifiant numérique du commentaire
-    :return: page html de suppression
-    """
+    """ Route pour gérer la suppresion d'une édition dans la base
+        :param edition_id : identifiant numérique de l'édition
+        """
 
     unique_edition = Edition.query.get(edition_id)
 
@@ -784,7 +806,9 @@ def suppression_edition(edition_id):
 
 @app.route("/suppression_bibliographie/<int:bibliographie_id>", methods=["GET", "POST"])
 def suppression_bibliographie(bibliographie_id):
-
+    """ Route pour gérer la suppresion d'un oeuvre dans la base
+            :param bibliographie_id : identifiant numérique de l'oeuvre
+            """
     unique_bibliographie=Bibliographie.query.get(bibliographie_id)
     if request.method == "GET":
         return render_template("pages/suppression_bibliographie.html", bibliographie=unique_bibliographie)
@@ -799,9 +823,8 @@ def suppression_bibliographie(bibliographie_id):
 
 @app.route("/suppression_citation/<int:citation_id>", methods=["GET", "POST"])
 def suppression_citation(citation_id):
-    """ Route pour supprimer le commentaire
-    :param comment_id : identifiant numérique du commentaire
-    :return: page html de suppression
+    """ Route pour gérer la suppresion d'une citation dans la base
+    :param citation_id : identifiant numérique de la citation
     """
 
     unique_citation = Citation.query.get(citation_id)
@@ -819,7 +842,9 @@ def suppression_citation(citation_id):
 
 @app.route("/suppression_bibliotheque/<int:bibliothecae_id>", methods=["GET", "POST"])
 def suppression_bibliotheque(bibliothecae_id):
-
+    """ Route pour gérer la suppresion d'une bibliothèque dans la base
+            :param bibliothecae_id : identifiant numérique de la bibliothèque
+            """
     unique_bibliotheque=Bibliothecae.query.get(bibliothecae_id)
     if request.method == "GET":
         return render_template("pages/suppression_bibliotheque.html", bibliotheque=unique_bibliotheque)
@@ -834,7 +859,9 @@ def suppression_bibliotheque(bibliothecae_id):
 
 @app.route("/suppression_exemplaire/<int:exemplaire_id>", methods=["GET", "POST"])
 def suppression_exemplaire(exemplaire_id):
-
+    """ Route pour gérer la suppresion d'un exemplaire dans la base
+            :param exemplaire_id : identifiant numérique de l'exemplaire
+            """
     unique_exemplaire=Exemplaire.query.get(exemplaire_id)
     if request.method == "GET":
         return render_template("pages/suppression_exemplaire.html", exemplaire=unique_exemplaire)
@@ -849,7 +876,9 @@ def suppression_exemplaire(exemplaire_id):
 
 @app.route("/suppression_provenance/<int:provenance_id>", methods=["GET", "POST"])
 def suppression_provenance(provenance_id):
-
+    """ Route pour gérer la suppresion d'une provenance dans la base
+            :param provenance_id : identifiant numérique de la provenance
+            """
     unique_provenance=Provenance.query.get(provenance_id)
     if request.method == "GET":
         return render_template("pages/suppression_provenance.html", provenance=unique_provenance)
@@ -864,7 +893,9 @@ def suppression_provenance(provenance_id):
 
 @app.route("/suppression_reference/<int:reference_id>", methods=["GET", "POST"])
 def suppression_reference(reference_id):
-
+    """ Route pour gérer la suppresion d'une référence dans la base
+            :param nr_person : identifiant numérique de la référence
+            """
     unique_reference=Reference.query.get(reference_id)
     if request.method == "GET":
         return render_template("pages/suppression_reference.html", reference=unique_reference)
@@ -879,7 +910,9 @@ def suppression_reference(reference_id):
 
 @app.route("/suppression_catalogue/<int:catalogue_id>", methods=["GET", "POST"])
 def suppression_catalogue(catalogue_id):
-
+    """ Route pour gérer la suppresion d'un catalogue dans la base
+           :param nr_person : identifiant numérique du catalogue
+           """
     unique_catalogue=Catalogue.query.get(catalogue_id)
     if request.method == "GET":
         return render_template("pages/suppression_catalogue.html", catalogue=unique_catalogue)
