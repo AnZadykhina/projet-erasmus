@@ -55,7 +55,6 @@ def exemplaires_par_possesseur():
 
 
 @app.route("/edition/<int:edition_id>")
-
 def issue(edition_id):
 
     unique_issue = Edition.query.get(edition_id)
@@ -81,7 +80,6 @@ def all_bibliographies():
     return render_template("pages/all_bibliographies.html", nom="Erasmus", bibliographies=bibliographies, page=page)
 
 @app.route("/bibliographie/<int:bibliographie_id>")
-
 def bibliographie(bibliographie_id):
 
     unique_bibliographie = Bibliographie.query.get(bibliographie_id)
@@ -90,12 +88,10 @@ def bibliographie(bibliographie_id):
     return render_template("pages/bibliographie.html", nom="Erasmus", bibliographie=unique_bibliographie, references=references)
 
 @app.route("/ajout_bibliographie", methods=["GET", "POST"])
-
 def ajout_bibliographie():
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
         """
-
 
     if request.method == "POST":
         statut, donnees = Bibliographie.ajout_bibliographie(
@@ -114,8 +110,6 @@ def ajout_bibliographie():
             return render_template("pages/ajout_bibliographie.html")
     else:
         return render_template("pages/ajout_bibliographie.html")
-
-
 
 
 @app.route("/modif_bibliographie/<int:bibliographie_id>", methods=["GET", "POST"])
@@ -166,7 +160,6 @@ def catalogue(catalogue_id):
     return render_template("pages/catalogue.html", nom="Erasmus", catalogue=unique_catalogue)
 
 @app.route("/ajout_catalogue", methods=["GET", "POST"])
-
 def ajout_catalogue():
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
@@ -223,7 +216,6 @@ def library(bibliothecae_id):
 
 
 @app.route("/ajout_bibliotheque", methods=["GET", "POST"])
-
 def ajout_bibliotheque():
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
@@ -245,9 +237,9 @@ def ajout_bibliotheque():
             return render_template("pages/ajout_bibliotheque.html")
     else:
         return render_template("pages/ajout_bibliotheque.html")
+    
 
 @app.route("/modif_bibliotheque/<int:bibliothecae_id>", methods=["GET", "POST"])
-
 def modif_bibliotheque(bibliothecae_id):
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
@@ -285,7 +277,6 @@ def exemplar(exemplaire_id):
 
 
 @app.route("/creer_edition", methods=["GET", "POST"])
-
 def creer_edition():
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
@@ -343,8 +334,6 @@ def creer_edition():
             reference=request.form.get("reference", None),
             citation=request.form.get("citation", None),
             user_id=current_user.get_id()
-
-
         )
         if statut is True:
             flash("Enregistrement effectué", "success")
@@ -429,7 +418,6 @@ def modif_edition(edition_id):
     return render_template("pages/modif_edition.html", nom="Erasmus", edition=unique_edition)
 
 @app.route("/ajout_exemplaire/<int:identifier>", methods=["GET", "POST"])
-
 def ajout_exemplaire(identifier):
     """ Route gérant les ajouts des commentaires
     :return: page html d'ajout de commentaire
@@ -476,7 +464,6 @@ def ajout_exemplaire(identifier):
 
 
 @app.route("/modif_exemplaire/<int:exemplaire_id>", methods=["GET", "POST"])
-
 def modif_exemplaire(exemplaire_id):
     """ Route gérant les ajouts des commentaires
         :return: page html d'ajout de commentaire
@@ -556,7 +543,6 @@ def ajout_provenance(exemplaire_id):
         return render_template("pages/ajout_provenance.html")
 
 @app.route("/modif_provenance/<int:provenance_id>", methods=["GET", "POST"])
-
 def modif_provenance(provenance_id):
 
     unique_provenance = Provenance.query.get(provenance_id)
@@ -589,7 +575,6 @@ def modif_provenance(provenance_id):
         return render_template("pages/modif_provenance.html", provenance=unique_provenance)
 
 @app.route("/ajout_reference/<int:edition_id>", methods=["GET", "POST"])
-
 def ajout_reference(edition_id):
     """ Route gérant les ajouts des commentaires
     :return: page html d'ajout de commentaire
@@ -622,7 +607,6 @@ def ajout_reference(edition_id):
         return render_template("pages/ajout_reference.html")
 
 @app.route("/modif_reference/<int:reference_id>", methods=["GET", "POST"])
-
 def modif_reference(reference_id):
     bibliographies = Bibliographie.query.all()
     unique_reference = Reference.query.get(reference_id)
@@ -649,7 +633,6 @@ def modif_reference(reference_id):
         return render_template("pages/modif_reference.html", reference=unique_reference, bibliographies=bibliographies)
 
 @app.route("/ajout_citation/<int:edition_id>", methods=["GET", "POST"])
-
 def ajout_citation(edition_id):
     """ Route gérant les ajouts des commentaires
     :return: page html d'ajout de commentaire
@@ -680,7 +663,6 @@ def ajout_citation(edition_id):
         return render_template("pages/ajout_citation.html")
 
 @app.route("/modif_citation/<int:citation_id>", methods=["GET", "POST"])
-
 def modif_citation(citation_id):
 
     unique_citation = Citation.query.get(citation_id)
